@@ -1,0 +1,228 @@
+extends header
+block header
+    div(class="trailer")
+        div(class="frame_container bookhead" style="background-image:url('"+"data:"+movie.posterType+";base64,"+movie.poster+"');position:relative")
+            div(class="bookcontainer")
+                p(class='headname' id="mname") #{movie.name}
+                each items in movie.geners
+                    span(class="headgener") #{items}
+                div(style="margin-top:15px;")
+                i(class="material-icons" style="color: #f5b50a;font-size:30px !important;") star
+                span(style="color:white;margin-left:15px;position:relative;bottom:8px;") #{movie.rating} / 10
+                p(class="headdate") #{movie.release}
+                    span(style="margin-left:60px") #{movie.duration}
+    div(class="book_main")
+        div(class="book_nav")
+            input(type='date' id="hd3"  name="booking_date" value=showdate min=showdate max=showdate style="border:0px;outline:0px;")
+            form(method="post" name="stp" style="margin:3px;")
+                select(name="showType" id="shty" style="margin-right:20px; border:0px;outline:0px;" onchange="showtp('"+movie.id+"')")
+                    option(value=show.showtype selected) #{show.showtype}
+                select(name="city" id="ct" style="border:0px;outline:0px;")
+                    option(value=show.city selected) #{show.city}
+        div(class="showinfo") Select your seat for #{showtime} show at #{show.theater}
+        div(id="thr" style="display:none") #{show.theater}
+        div(style="height:400px;")
+            center
+                div(class="seatlink" onclick="getseat()") PROCEED
+        div(class="theatre")
+            div(class="cinema-seats left")
+                div(class="cinema-row row-1")
+                    div(class="seat" id="l11")
+                    div(class="seat" id="l12")
+                    div(class="seat" id="l13")
+                    div(class="seat" id="l14")
+                    div(class="seat" id="l15")
+                    div(class="seat" id="l16")
+                    div(class="seat" id="l17")
+
+                div(class="cinema-row row-2")
+                    div(class="seat" id="l21")
+                    div(class="seat" id="l22")
+                    div(class="seat" id="l23")
+                    div(class="seat" id="l24")
+                    div(class="seat" id="l25")
+                    div(class="seat" id="l26")
+                    div(class="seat" id="l27")
+
+                div(class="cinema-row row-3")
+                    div(class="seat" id="l31")
+                    div(class="seat" id="l32")
+                    div(class="seat" id="l33")
+                    div(class="seat" id="l34")
+                    div(class="seat" id="l35")
+                    div(class="seat" id="l36")
+                    div(class="seat" id="l37")
+
+                div(class="cinema-row row-4")
+                    div(class="seat" id='l41')
+                    div(class="seat" id="l42")
+                    div(class="seat" id="l43")
+                    div(class="seat" id="l44")
+                    div(class="seat" id="l45")
+                    div(class="seat" id="l46")
+                    div(class="seat" id="l47")
+
+                div(class="cinema-row row-5")
+                    div(class="seat" id="l51")
+                    div(class="seat" id="l52")
+                    div(class="seat" id="l53")
+                    div(class="seat" id="l54")
+                    div(class="seat" id="l55")
+                    div(class="seat" id="l56")
+                    div(class="seat" id="l57") 
+
+                div(class="cinema-row row-6")
+                    div(class="seat" id="l61")
+                    div(class="seat" id="l62")
+                    div(class="seat" id="l63")
+                    div(class="seat" id="l64")
+                    div(class="seat" id="l65")
+                    div(class="seat" id="l66") 
+                    div(class="seat" id="l67")
+
+                div(class="cinema-row row-7")
+                    div(class="seat" id="l71")
+                    div(class="seat" id="l72")
+                    div(class="seat" id="l73")
+                    div(class="seat" id="l74")
+                    div(class="seat" id="l75")
+                    div(class="seat" id="l76")
+                    div(class="seat" id="l77")
+
+
+            div(class="cinema-seats right")
+                div(class="cinema-row row-1")
+                    div(class="seat" id="r11")
+                    div(class="seat" id="r12")
+                    div(class="seat" id="r13")
+                    div(class="seat" id="r14")
+                    div(class="seat" id="r15")
+                    div(class="seat" id="r16")
+                    div(class="seat" id="r17")
+
+                div(class="cinema-row row-2")
+                    div(class="seat" id="r21")
+                    div(class="seat" id="r22")
+                    div(class="seat" id="r23")
+                    div(class="seat" id="r24")
+                    div(class="seat" id="r25")
+                    div(class="seat" id="r26")
+                    div(class="seat" id="r27")
+
+                div(class="cinema-row row-3")
+                    div(class="seat" id="r31")
+                    div(class="seat" id="r32")
+                    div(class="seat" id="r33")
+                    div(class="seat" id="r34")
+                    div(class="seat" id="r35")
+                    div(class="seat" id="r36")
+                    div(class="seat" id="r37")
+
+                div(class="cinema-row row-4")
+                    div(class="seat" id="r41")
+                    div(class="seat" id="r42")
+                    div(class="seat" id="r43")
+                    div(class="seat" id="r44")
+                    div(class="seat" id="r45")
+                    div(class="seat" id="r46")
+                    div(class="seat" id="r47")
+
+                div(class="cinema-row row-5")
+                    div(class="seat" id="r51")
+                    div(class="seat" id="r52")
+                    div(class="seat" id="r53")
+                    div(class="seat" id="r54")
+                    div(class="seat" id="r55")
+                    div(class="seat" id="r56")
+                    div(class="seat" id="r57")
+
+                div(class="cinema-row row-6")
+                    div(class="seat" id="r61")
+                    div(class="seat" id="r62")
+                    div(class="seat" id="r63")
+                    div(class="seat" id="r64")
+                    div(class="seat" id="r65")
+                    div(class="seat" id="r66")
+                    div(class="seat" id="r67")
+
+                div(class="cinema-row row-7")
+                    div(class="seat" id="r71")
+                    div(class="seat" id="r72")
+                    div(class="seat" id="r73") 
+                    div(class="seat" id="r74") 
+                    div(class="seat" id="r75")
+                    div(class="seat" id="r76")
+                    div(class="seat" id="r77")
+        div(id="hd1" style="display:none") #{movie._id}
+        div(id="hd2" style="display:none") #{show._id}
+        div(id="hd4"  style="display:none") #{showtime}
+        script.
+            var mid=document.getElementById("hd1").innerHTML;
+            var sid=document.getElementById("hd2").innerHTML;
+            var bookingdate=document.getElementById("hd3").value;
+            var bookingtime=document.getElementById("hd4").innerHTML;
+            $.post("/show/bookedseats",{
+                movieid: mid,
+                showid: sid,
+                bookingdate: bookingdate,
+                bookingtime: bookingtime,
+            },function(data,status){
+            for(var i=0;i<(data.seats).length;i++){
+                document.getElementById(data.seats[i]).style.cssText="background: linear-gradient(#322a2a,#eee) !important;"
+            }
+            $('.cinema-seats .seat').on('click', function() {
+            flag=true;
+            for(var i=0;i<(data.seats).length;i++){
+                if($(this)[0].id==data.seats[i]){
+                    flag=false;
+                }
+            }
+            if(flag==true)
+                $(this).toggleClass('active');
+            })
+                    });
+            function getseat(){
+                var mid=document.getElementById("hd1").innerHTML;
+                var sid=document.getElementById("hd2").innerHTML;
+                var bookingdate=document.getElementById("hd3").value;
+                var bookingtime=document.getElementById("hd4").innerHTML;
+                var array=[];
+                var v=document.getElementsByClassName("active");
+                for(var i=0;i<v.length;i++){
+                    array.push(v[i].id)
+                };
+                document.getElementById("ab").innerHTML=array.length;
+                array=array.toString();
+            $.post("/show/bookingconfermation",{
+                seats:array,
+                movieid: mid,
+                showid: sid,
+                bookingdate: bookingdate,
+                bookingtime: bookingtime,
+            },function(data,status){
+                var mn=document.getElementById("mname").innerHTML;
+                var st=document.getElementById("shty").value;
+                var th=document.getElementById("thr").innerHTML;
+                var cty=document.getElementById("ct").value;
+              document.getElementById("cnfpopup").style.display="block";
+              $.post('/show/sendmail',{
+                  txt:"Dear Customer, your ticket has been generated for \n("+st+") " +mn+" on "+bookingdate+" "+bookingtime+ " at \n"+th+" "+cty+"\nseats: "+array+"\nBooking ID: "+sid,
+              });  
+            });
+            }
+    include footer.pug
+    div(class="popup-container" id="cnfpopup")
+        div(class="popup")
+            div(class="popup-close" onclick="closecnfpopup()") &#215
+            div(class="upstrip") 
+                div(class="cnfmsg") You Have successfully Boooked With Us.....
+                div(style="float:left")
+                    div(style="font-weight:bold") #{movie.name}
+                    div(style="font-size:13px") #{show.theater}
+                    div(style="font-size:12px;") #{showdate} | #{showtime}
+                div(style="float:right;padding-right:20px;text-align:center;")
+                    div(class="activebooking" id="ab") 0        
+                    div(style="font-size:12px;") Quantity
+            div(class="bottomstrip")
+                div You Have Got A Mail To Your Registered Email Address Check Please..
+                div(style="text-align:center; font-weight:bold") :)

@@ -1,0 +1,29 @@
+extends header
+
+block header
+    div(class="profile_head")
+        div #{show.name}  
+    div(class="profile_main")
+        div(class="info_form" style="width:75%")
+            h1(style="font-weight:bold;color:white;text-align:center") Add Show
+            form(action="/admin/addshow" method="post")
+                label Theater
+                input(type="text" name="theater")
+                label City
+                input(type="text" name="city")
+                label Show Type
+                br
+                select(name="showtype" style="background-color:#233a50; width:200px;")
+                    option(value="2D") 2D
+                    option(value="3D") 3D
+                br
+                label Show Time
+                    input(type="text" name="show" style="margin-bottom:2px;")
+                    span(id="show" style="visibility:visible")
+                    button(onclick='return showtime()' style="background-color:#233a50;border:0px;margin-left:50%;margin-top:5px") Add More 
+                    br
+                br
+                input(type="text" name='movieid' value=show._id style="display:none")
+                input(type="submit" value="ADD") 
+
+    include footer.pug

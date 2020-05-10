@@ -1,0 +1,152 @@
+extends header
+block header
+    div(class="profile_head")
+        div Welcome to the Admin Portel 
+            center 
+                div MR. #{profile.name}
+    div(class="profile_main")
+        div(class="profile_link")
+            i(class="material-icons" style="font-size:60px; color:white;") account_circle
+            div(class="active_profile_link" onclick="profile_link(this,'update')") Add Movies
+            div( onclick="profile_link(this,'mymovies')") My Movies
+            div( onclick="profile_link(this,'changepassword')") Remove Movies
+            div( onclick="profile_link(this,'addshow')") Add Show
+            div( onclick="profile_link(this)") 
+                a(href="/logout") Log Out
+        div(class="info_form")
+            div(style="display:none" class="visible_profile_link" id="update")
+                h1(style="font-weight:bold;color:white;text-align:center") Movie Detail
+                form(action="/admin/add" method="post" enctype="multipart/form-data" name="addmovie")
+                    label Name
+                    input(type="text" name="name")
+                    label Rating
+                    input(type="text" name="rating")
+                    label Trailer Link
+                    input(type="text" name="trailer")
+                    label Release Date
+                    input(type="date" name="release")
+                    label Duration
+                    input(type="text" name="duration")
+                    label Director
+                    input(type="text" name="director")
+                    label Description
+                    input(type="text" name="description")
+                    label Position
+                    br
+                    select(name="position" style="background-color:#233a50;")
+                        option(value="trending") Trending
+                        option(value="now_in_theater") Now In Thearter
+                        option(value="upcoming") Upcoming
+                    br
+                    label Geners
+                    br
+                    select(name="geners" style="background-color:#233a50;" multiple)
+                        option(value="action") Action
+                        option(value="adventure") Adventure
+                        option(value="animation") Animation
+                        option(value="biography") Biography
+                        option(value="comedy") Comedy
+                        option(value="crime") Crime
+                        option(value="documentary") Documentary
+                        option(value="drama") Drama
+                        option(value="family") Family
+                        option(value="fantasy") Fantasy
+                        option(value="history") History
+                        option(value="horror") Horror
+                        option(value="mystery") Mystery
+                        option(value="romance") Romance
+                        option(value="sci-fi") Sci-Fi
+                        option(value="sport") sport
+                        option(value="superhero") Superhero
+                        option(value="thriller") Thriller
+                    br
+                    label Stars
+                    input(type="text" name="stars" style="margin-bottom:2px;")
+                    span(id="star" style="visibility:visible")
+                    button(onclick='return addstars()' style="background-color:#233a50;border:0px;margin-left:50%;margin-top:5px") Add More 
+                    br
+                    label Poster
+                    input(type="file" name="poster" style="padding-top:5px;")
+                    input(type="submit" value="ADD")
+            div(id="mymovies" style="display:none")
+                div(id="movie" class="carousel slide" data-ride="carousel")
+                    div(class="carousel-inner")
+                        -var q=0;
+                        while q++<movie.length
+                            if q===1
+                                div(class="item active") 
+                                    form(action="/admin/update" name="updateform" method="post" onsubmit="return updateadded('"+movie[q-1]._id+"',event)")
+                                        label Name
+                                        input(type="text" name="name" value=movie[q-1].name)
+                                        label Rating
+                                        input(type="text" name="rating" value=movie[q-1].rating)
+                                        label Trailer
+                                        input(type="text" name="trailer" value=movie[q-1].trailer)
+                                        label Position                                       
+                                        br
+                                        select(name="position" style="background-color:#233a50;")
+                                            if movie[q-1].position==="trending"
+                                                option(value="trending" selected="selected") Trending
+                                            else
+                                                option(value="trending") Trending
+                                            if movie[q-1].position==="now_in_theater"
+                                                option(value="now_in_theater" selected="selected") Now In Thearter
+                                            else
+                                                 option(value="now_in_theater") Now In Thearter
+                                            if movie[q-1].position==="upcoming"
+                                                option(value="upcoming" selected="selected") Upcoming
+                                            else
+                                                option(value="upcoming") Upcoming
+                                        br
+                                        input(type="submit" value="Update")
+                            else
+                                div(class="item") 
+                                    form(action="admin/update" name="updateform" method="post" onsubmit="return updateadded('"+movie[q-1]._id+"',event)")
+                                        label Name
+                                        input(type="text" name="name" value=movie[q-1].name)
+                                        label Rating
+                                        input(type="text" name="rating" value=movie[q-1].rating)
+                                        label Trailer
+                                        input(type="text" name="trailer" value=movie[q-1].trailer)
+                                        label Position
+                                        br
+                                        select(name="position" style="background-color:#233a50;")
+                                            if movie[q-1].position==="trending"
+                                                option(value="trending" selected="selected") Trending
+                                            else
+                                                option(value="trending") Trending
+                                            if movie[q-1].position==="now_in_theater"
+                                                option(value="now_in_theater" selected="selected") Now In Thearter
+                                            else
+                                                 option(value="now_in_theater") Now In Thearter
+                                            if movie[q-1].position==="upcoming"
+                                                option(value="upcoming" selected="selected") Upcoming
+                                            else
+                                                option(value="upcoming") Upcoming
+                                        br
+                                        input(type="submit" value="Update")
+                        a(class="left carousel-control" href="#movie" data-slide="prev")
+                            span(class="glyphicon glyphicon-chevron-left")
+                            span(class="sr-only") Previous
+                        a(class="right carousel-control" href="#movie" data-slide="next")
+                            span(class="glyphicon glyphicon-chevron-right")
+                            span(class="sr-only") Next
+            div(id="changepassword" style="display:none")
+                each items in movie
+                    div(class="addMovies")
+                        p(style="float:left; margin:0px;") #{items.name}
+                        i(class="material-icons deleteicon" onclick="remove_movie('"+items._id+"')") delete_forever
+            div(id="addshow" style="display:none")
+                each items in movie
+                    div(class="addMovies")
+                        p(style="float:left; margin:0px;") #{items.name}
+                        a(href="/admin/addshow/"+items._id)
+                            i(class="material-icons deleteicon") add_box
+    if msg
+        p(id="msg" style="display:none") #{msg}
+        script.
+            setTimeout(function(){
+            var v=document.getElementById("msg").innerHTML;
+            window.alert(v);
+            },500);
+    include footer.pug

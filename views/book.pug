@@ -1,0 +1,56 @@
+extends header
+block header
+    div(class="trailer")
+        div(class="frame_container bookhead" style="background-image:url('"+"data:"+movie.posterType+";base64,"+movie.poster+"');position:relative")
+            div(class="bookcontainer")
+                p(class='headname') #{movie.name}
+                each items in movie.geners
+                    span(class="headgener") #{items}
+                div(style="margin-top:15px;")
+                i(class="material-icons" style="color: #f5b50a;font-size:30px !important;") star
+                span(style="color:white;margin-left:15px;position:relative;bottom:8px;") #{movie.rating} / 10
+                p(class="headdate") #{movie.release}
+                    span(style="margin-left:60px") #{movie.duration}
+    div(class="book_main")
+        if err
+            div(class="book_nav err") No Bookings Available in your City. Try After some time or try change/Add city to your profile
+        if show
+            div(class="book_nav")
+                input(type='date' id="d1" name="booking_date" value=movie.release min=movie.release style="border:0px;outline:0px;")
+                script.
+                    var d=document.getElementById("d1").value;
+                    d=d.split('-');
+                    var date=new Date(Number(d[0]),Number(d[1])-1,Number(d[2]));
+                    date=date.getTime()+(7*24*3600*1000);
+                    date=new Date(date);
+                    document.getElementById("d1").max=date.getFullYear()+'-'+date.getMonth()+1+'-'+date.getDate();
+                form(method="post" name="stp" style="margin:3px;")
+                    select(name="showType" style="margin-right:20px; border:0px;outline:0px;" onchange="showtp('"+movie.id+"')")
+                        option(value="2D" id="2D") 2D
+                        option(value="3D" id='3D') 3D
+                    p(style="display:none" id="showtypedum") #{show[0].showtype}
+                    script.
+                        var t=document.getElementById('showtypedum').innerHTML;
+                        document.getElementById(t).selected="selected";
+                    select(name="city" style="border:0px;outline:0px;")
+                        option(value=show[0].city selected) #{show[0].city}
+            table(class='book_slot' cellspacing="5")
+                tr
+                    th Theater
+                    th Timing
+                each items in show
+                    tr
+                        td #{items.theater}
+                        td 
+                            div(class="time_slot"  style="margin-left:50px;")
+                                each val in items.showtime
+                                    div  
+                                        a(href="/selectseat/"+items._id+"/"+val style="color:black !important; text-decoration:none" onmousedown="link(this)") #{val}  
+                                        script.
+                                            function link(x){
+                                            d=document.getElementById("d1").value;
+                                            h=x.href+"/"+d;
+                                            x.href=h;
+                                            }
+
+    include footer.pug

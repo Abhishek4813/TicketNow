@@ -1,0 +1,155 @@
+extends header
+
+block header
+    div(class="trending-slider")
+        div(class="trending-container")
+            div(id="demo" class="carousel slide" data-ride="carousel")
+                ul(class="carousel-indicators")
+                    li(data-target="#demo" data-slide-to="0" class="active")
+                    -var x=0;
+                    while ++x<trending.length/4
+                        li(data-target="#demo" data-slide-to=x)
+                div(class="carousel-inner")
+                    -var q=0;
+                    -var m=0; 
+                    -var n=0;
+                    while q++<trending.length/4
+                        if q===1
+                            div(class="item active")
+                                div(class="item")
+                                while m<4*(q)
+                                    a(href="/movie/"+trending[m]._id)
+                                        img(src="data:"+trending[m].posterType+";base64,"+trending[m].poster alt=trending[m].name)
+                                    -var v=m++;
+                                div(class="slide-text")    
+                                    while n<4*(q)
+                                        a(href="/movie/"+trending[n]._id)
+                                            p #{trending[n].name}
+                                                br
+                                                i(class="material-icons") star
+                                                span(style="color:white !important") #{trending[n].rating}/10
+                                        -var v=n++;
+                        else
+                            div(class="item")
+                                while m<4*(q)
+                                    a(href="/movie/"+trending[m]._id)
+                                        img(src="data:"+trending[m].posterType+";base64,"+trending[m].poster alt=trending[m].name)
+                                    -var v=m++;
+                                div(class="slide-text")    
+                                    while n++<4*(q)
+                                        a(href="/movie/"+trending[n-1]._id)
+                                            p #{trending[n-1].name}
+                                                br
+                                                i(class="material-icons") star
+                                                span(style="color:white !important") #{trending[n-1].rating}/10           
+    div(class="main-content")
+        p Films Now in Theater
+        div(id="demo1" class="carousel slide" data-ride="carousel")
+                div(class="carousel-inner")
+                    -var q=0;
+                    -var m=0; 
+                    -var n=0;
+                    while q++<now.length/6
+                        if q===1
+                            div(class="item active")
+                                div(class="item")
+                                while m<6*(q)
+                                    a(href="/movie/"+now[m]._id)
+                                        img(src="data:"+now[m].posterType+";base64,"+now[m].poster alt=now[m].name)
+                                    -var v=m++;
+                                div(class="slide-text")    
+                                    while n<6*(q)
+                                        a(href="/movie/"+now[n]._id)
+                                            p #{now[n].name}
+                                                br
+                                                i(class="material-icons") star
+                                                span(style="color:white !important") #{now[n].rating}/10
+                                        -var v=n++;
+                        else
+                            div(class="item")
+                                while m<6*(q)
+                                    a(href="/movie/"+now[m]._id)
+                                        img(src="data:"+now[m].posterType+";base64,"+now[m].poster alt=now[m].name)
+                                    -var v=m++;
+                                div(class="slide-text")    
+                                    while n++<6*(q)
+                                        a(href="/movie/"+now[n-1]._id)
+                                            p #{now[n-1].name}
+                                                br
+                                                i(class="material-icons") star
+                                                span(style="color:white !important") #{now[n-1].rating}/10 
+                    a(class="left carousel-control" href="#demo1" data-slide="prev")
+                        span(class="glyphicon glyphicon-chevron-left")
+                        span(class="sr-only") Previous
+                    a(class="right carousel-control" href="#demo1" data-slide="next")
+                        span(class="glyphicon glyphicon-chevron-right")
+                        span(class="sr-only") Next
+        p Upcoming Films 
+        div(id="demo2" class="carousel slide" data-ride="carousel")
+                div(class="carousel-inner")
+                    -var q=0;
+                    -var m=0; 
+                    -var n=0;
+                    while q++<upcoming.length/6
+                        if q===1
+                            div(class="item active")
+                                div(class="item")
+                                while m<6*(q)
+                                    a(href="/movie/"+upcoming[m]._id)
+                                        img(src="data:"+upcoming[m].posterType+";base64,"+upcoming[m].poster alt=upcoming[m].name)
+                                    -var v=m++;
+                                div(class="slide-text")    
+                                    while n<6*(q)
+                                        a(href="/movie/"+upcoming[n]._id)
+                                            p #{upcoming[n].name}
+                                                br
+                                                i(class="material-icons") star
+                                                span(style="color:white !important") #{upcoming[n].rating}/10
+                                        -var v=n++;
+                        else
+                            div(class="item")
+                                while m<6*(q)
+                                    a(href="/movie/"+upcoming[m]._id)
+                                        img(src="data:"+upcoming[m].posterType+";base64,"+upcoming[m].poster alt=upcoming[m].name)
+                                    -var v=m++;
+                                div(class="slide-text")    
+                                    while n++<6*(q)
+                                        a(href="/movie/"+upcoming[n-1]._id)
+                                            p #{upcoming[n-1].name}
+                                                br
+                                                i(class="material-icons") star
+                                                span(style="color:white !important") #{upcoming[n-1].rating}/10 
+                    a(class="left carousel-control" href="#demo2" data-slide="prev")
+                        span(class="glyphicon glyphicon-chevron-left")
+                        span(class="sr-only") Previous
+                    a(class="right carousel-control" href="#demo2" data-slide="next")
+                        span(class="glyphicon glyphicon-chevron-right")
+                        span(class="sr-only") Next
+    include footer.pug
+    div(class="popup-container" id="popup")
+        div(class="popup")
+            div(class="popup-close" onclick="popupclose()") &#215
+            form(action="/login" name="loginform" id="login" method="post")
+                h1 LOGIN
+                p EMAIL ADDRESS
+                input(type="text" name="email" onchange="outlinel(this)")
+                p PASSWORD
+                input(type="password" id='loginpswd' name="password" onchange="outlinel(this)")
+                i(class="material-icons visibility" onmousedown="password_visible('loginpswd')" onmouseup="password_visible('loginpswd')") visibility
+                span( id="pswdmsg" style="visibility:visible") #{msg}
+                div(onclick="display()") Sign Up
+                input(type="submit" value="LOG IN") 
+            form(action="/signup" name="form" id="signup" style="display:none" method="post" onsubmit="return signupvalid()")
+                h1 SIGN UP
+                p NAME
+                input(type="text" name="name" onchange="outline(this)")
+                p EMAIL ADDRESS
+                input(type="email" name="email" onchange='outline(this)')
+                p CONTACT NUMBER
+                input(type="tel" name="contact" pattern="[0-9]{10}" onchange='outline(this)')
+                p PASSWORD
+                input(type="password" id="signuppwd" name="password" minlength="8" onchange='outline(this)')
+                p COFIRM PASSWORD
+                input(type="password" id="cnfpwd" name="confirmpassword" onchange="outline(this)")
+                span(class="pswd_msg" id="spswdmsg") * password is not same
+                input(type="submit" value="SIGN UP") 

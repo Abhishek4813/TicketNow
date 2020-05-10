@@ -1,0 +1,88 @@
+extends header
+
+block header
+    div(class="profile_head")
+        div Welcome  #{profile.name}
+    div(class="profile_main")
+        div(class="profile_link")
+            i(class="material-icons" style="font-size:60px; color:white;") account_circle
+            div(class="active_profile_link" onclick="profile_link(this,'update')") My Profile
+            div( onclick="profile_link(this,'booking')") My Bookings
+            div( onclick="profile_link(this,'changepassword')") Change Password
+            div( onclick="profile_link(this)") 
+                a(href="/logout") Log Out
+        div(class="info_form")
+            div(style="display:none" class="visible_profile_link" id="update")
+                h1(style="font-weight:bold;color:white;text-align:center") User Information
+                form(action="/update" method="post")
+                    label Name
+                    input(type="text" name="name" value=profile.name required)
+                    label E-mail
+                    input(type="text" value=profile.email disabled)
+                    label Phone Number
+                    input(type="tel" name="contact" value=profile.contact required minlength="10")
+                    label City
+                    input(type="text" name="city" value=profile.city)
+                    input(type="submit" value="Update")
+            div(id="changepassword" style="display:none")
+                form(action="/change_password" name="changepswd" method="post" onsubmit="return change_password()")
+                    label Old Password
+                    input(type="password" name="oldpassword" required)
+                    label new Password
+                    input(type="password" name="newpassword" minlenght="8" required)
+                    input(type="submit" value="change")
+            div(style="display:none" id="booking")
+                h1(style="font-weight:bold;color:white;text-align:center") Bookings Histoy
+                -var x=0;
+                while x++<booking.length
+                    div(class="history")
+                        div 
+                            img(id='poster'+x+booking[x-1].movieid src="/images/loader.gif" alt="image" style="object-fit:cover")   
+                        div(class="historyinfo")
+                            h3(id='name'+x+booking[x-1].movieid style="margin-top:0px")
+                            table
+                                tr
+                                    td(id='theater'+x+booking[x-1].showid colspan="2") Viva Collage, Jalandhar (3D)
+                                tr
+                                    td Booking Date  
+                                    td(id='book'+x+booking[x-1].showid)   #{(((booking[x-1].bookingdate).split("-")).reverse()).join("/")}
+                                tr
+                                    td Show  
+                                    td(id='time'+x+booking[x-1].showid)   #{booking[x-1].bookingtime}
+                                tr
+                                    td Tickets 
+                                    td   #{(booking[x-1].seats).length} (#{(booking[x-1].seats)}) 
+                            a(id='link'+x+booking[x-1].showid href="/cancle/"+booking[x-1]._id class="canclelink") CANCEL
+                    image(src='' display="none" onerror='call("'+booking[x-1].movieid+'","'+booking[x-1].showid+'",'+x+')')
+                    script.
+                        function call(d,a,x){
+                            var curdate=new Date();
+                            var b=(document.getElementById("book"+x+a).innerHTML).split('/');
+                            var t=document.getElementById("time"+x+a).innerHTML;
+                            t=t.split(':');
+                            t[0]=t[0].trim(" ");
+                            if(t[1].slice(2,4)=='AM' && t[0]=='12'){
+                                t[0]=Number(t[0])-12;}
+                            if (t[1].slice(2,4)=="PM" && t[0]!=12){
+                                t[0]=Number(t[0])+12;}
+                            t[1]=Number(t[1].slice(0,2));
+                            t[0]=Number(t[0]);
+                            var bokdate= new Date(b[2],b[1]-1,b[0],t[0]-2,t[1],0,0);
+                            if(curdate>=bokdate){
+                                document.getElementById("link"+x+a).href="#";
+                                document.getElementById("link"+x+a).style.backgroundColor="gray";
+                            }
+                            $.get('/profile/movie/'+d,function(mov,status){
+                                document.getElementById("poster"+x+d).src="data:"+mov.posterType+';base64,'+mov.poster;
+                                document.getElementById("name"+x+d).innerHTML=mov.name;
+                            })
+                            $.get('/profile/show/'+a,function(show,status){
+                                document.getElementById("theater"+x+a).innerHTML=show.theater+"("+show.showtype+")";
+                            })
+                        }   
+    if message
+        script.
+            setTimeout(function(){
+            window.alert("your booking has been cancelled successfully....");
+            },500);
+    include footer.pug

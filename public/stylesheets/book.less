@@ -1,0 +1,124 @@
+.bookhead{
+    filter:blur(0px);
+    margin:0 4%;
+    font-family: 'Nunito Sans',sans-serif;
+}
+.bookcontainer{
+    position:absolute; 
+    bottom:20px;
+    left:40px;
+}
+.headname{
+    font-size:30px;
+    color:white;
+    font-weight:bold;
+    text-shadow: 2px 2px 6px black;
+}
+.headgener{
+    margin-right:30px;
+    color:white;
+    font-size:20px;
+    background-color:#dd003f;
+    padding:5px 10px;
+    font-weight:bold;
+    border-radius:10px;
+}
+.headdate{
+    font-size:20px;
+    color:white;
+    text-shadow: 2px 2px 6px black;
+}
+.book_main{
+    background-color:#020d18;
+    margin:0;
+    padding:0 4% 0 4%;
+    padding-top:50px;
+    padding-bottom:50px;
+    font-family: 'Nunito Sans',sans-serif;
+    font-size:17px;
+}
+.book_nav{
+    display:flex;
+    justify-content: space-between;
+    background-color:white;
+    height:40px;
+    align-items: center;
+    padding:0px 30px;
+}
+.err{
+    height:400px;
+    background-color:#020d18 !important;
+    font-size:30px;
+    justify-content: center;
+    font-weight: bold;
+}
+.book_slot{
+    color:black;
+    background-color:white;
+    width:100%;
+    margin-top:30px;
+    font-size:20px;
+    padding:3px;
+    border:1px solid black;
+}
+.book_slot tr td{
+    border:1px solid black;
+}
+.book_slot th{
+    text-align: center !important;
+}
+
+.book_slot th,.book_slot td{
+        padding:20px 0px;
+        text-align: center !important;
+    }
+.time_slot{
+    display:flex;
+    flex-wrap: wrap;
+    max-width:900px;
+}
+.time_slot div{
+    border:1px solid black;
+    padding:3px;
+    border-radius: 5px;
+    margin-bottom:5px;
+    margin-left:50px;
+}
+@media only screen and (max-width:650px){
+    .headname{
+        font-size:20px;
+    }
+    .headgener{
+        font-size:15px;
+        padding:3px 7px;
+    }
+    .headdate{
+        font-size:10px;
+    }
+    .theater div,.time div{
+        padding:15px 0px;
+    }
+    .time_slot div{
+        margin-left:20px;
+    }
+    .book_slot{
+        font-size:16px;
+        margin-top:20px;
+    }
+}
+@media only screen and(max-width:460px){
+    .book_main{
+        font-size:14px;
+        padding:0 2%;
+    }
+    .book_nav{
+        padding:0px 15px;
+    }
+    .book_nav input{
+        width:135px;
+    }
+    .book_slot{
+        font-size:14px;
+        margin-top:10px;
+    }
+}

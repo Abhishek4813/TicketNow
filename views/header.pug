@@ -1,0 +1,60 @@
+extends layout
+
+block content
+    div(class="nav-container") 
+        div
+            div(class="inner-nav")
+                div(class="logo-container")
+                    a(href="/" style='text-decoration:none')
+                        img(src='/images/T-400.png' width="45" height="45")
+                        span(class="logo-text") TicketNow
+                div(class="nav-bar")
+                    div
+                        ul(type="none" class="nav-list")
+                            li
+                                a(href="/") HOME
+                            li 
+                                a(href='/profile')  PROFILE
+                            li 
+                                a(href="/admin") ADMIN
+                    div(class="login" onclick="login()") 
+                        a(class="loginlink") #{login}
+                i(class="material-icons list-icon" onclick="show_nav()") dehaze
+            form(name="searchform" class="search-form" onsubmit="searchsubmit()")
+                input(type="text" id="mainsearch" class="search_bar" placeholder="Search for Movies")
+                i(class="material-icons search" onclick="searchsubmit()") search
+        div(class="drop-nav" id="drop_nav")
+            div
+                ul(type="none" class="nav-list drop")
+                    li 
+                        a(href="/") HOME
+                            i(class="material-icons right-arrow") keyboard_arrow_right
+                    li
+                        a(href="/profile") PROFILE
+                        i(class="material-icons right-arrow") keyboard_arrow_right
+                    li 
+                        a(href="/admin") ADMIN
+                        i(class="material-icons right-arrow") keyboard_arrow_right
+                div(class="login login-size" onclick="login()")
+                    a(class="loginlink") #{login}
+            div(style="height:30px;")
+    script.
+        var mn;
+        var id;
+        $.get('/search',function(data,status){
+        $(function(){
+            var availableTags=data.mname;
+            $("#mainsearch").autocomplete({
+                source:availableTags
+            });
+        });
+        mn=data.mname;
+        id=data.mid;   
+        }); 
+        function searchsubmit(){
+            var t=document.getElementById('mainsearch').value;
+            i=mn.indexOf(t);
+            document.searchform.action='/movie/'+id[i];
+            document.searchform.submit();
+        }
+    block header

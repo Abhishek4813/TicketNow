@@ -1,0 +1,68 @@
+extends header
+block header
+    div(class="trailer")
+        div(class="frame_container" style="background-image:url('"+"data:"+movie.posterType+";base64,"+movie.poster+"')")
+        div(class="frame_inner")
+            iframe(width="65%" height="500" src=movie.trailer frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    div(class="movie_info")
+        div
+            img(src="data:"+movie.posterType+";base64,"+movie.poster alt=movie.name)
+        div(class="info_container" style="width:73%")
+            h1 #{movie.name}
+            p(style="font-size:20px; max-width:750px;") #{movie.description}
+            hr(style="width:100%")
+            div(style="float:left") 
+                b Release date : 
+                span(style="color:white;") #{movie.release}
+            div(class="duration" style="float:right") 
+                b Duration : 
+                span(style="color:white;") #{movie.duration}
+            div(style="clear:left; margin-top:100px;")
+                b Director : 
+                span #{movie.director}
+            div(style="margin-top:15px;")
+                i(class="material-icons" style="color: #f5b50a;font-size:30px !important;") star
+                span(style="color:white;margin-left:15px;position:relative;bottom:8px;") #{movie.rating}/10
+            div(style="margin-top:15px; max-width:600px;")
+                b Geners :
+                div(style="padding-left:100px;position:relative;bottom:25px;")
+                    each item in movie.geners
+                        span #{item},
+            div(style="margin-top:15px;max-width:600px;")
+                b Stars :
+                div(style="padding-left:100px;position:relative;bottom:25px;") 
+                    each val in movie.stars
+                        span #{val},
+            center
+                a(href="/book/"+movie._id) BOOK NOW
+            
+    include footer.pug
+    div(class="popup-container" id="popup")
+        div(class="popup")
+            div(class="popup-close" onclick="popupclose()") &#215
+            form(action="/login" name="loginform" id="login" method="post" onsubmit="return submitlogin()")
+                h1 LOGIN
+                p EMAIL ADDRESS
+                input(type="text" name="email" onchange="outline(this)")
+                p PASSWORD
+                input(type="password" id='loginpswd' name="password" onchange="outline(this)")
+                i(class="material-icons visibility" onmousedown="password_visible('loginpswd')" onmouseup="password_visible('loginpswd')") visibility
+                span( id="pswdmsg" style="visibility:visible") #{msg}
+                div(onclick="display()") Sign Up
+                input(type="submit" value="LOG IN") 
+            form(action="/signup" name="form" id="signup" style="display:none" method="post" onsubmit="return signupvalid()")
+                h1 SIGN UP
+                p NAME
+                input(type="text" name="name" onchange="outline(this)")
+                p EMAIL ADDRESS
+                input(type="email" name="email" onchange='outline(this)')
+                p CONTACT NUMBER
+                input(type="tel" name="contact" pattern="[0-9]{10}" onchange='outline(this)')
+                p PASSWORD
+                input(type="password" id="signuppwd" name="password" minlength="8" onchange='outline(this)')
+                i(class="material-icons visibility" onmousedown="password_visible('signuppwd')" onmouseup="password_visible('signuppwd')") visibility
+                p COFIRM PASSWORD
+                input(type="password" id="cnfpwd" name="confirmpassword" onchange="outline(this)")
+                i(class="material-icons visibility" onmousedown="password_visible('cnfpwd')" onmouseup="password_visible('cnfpwd')") visibility
+                span(class="pswd_msg" id="pswdmsg") * password is not same
+                input(type="submit" value="SIGN UP")

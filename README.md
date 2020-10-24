@@ -1,6 +1,6 @@
 # TicketNow (A web app for movie booking)
-The App is deployed at Azure                                                                                               
-Live link : [https://ticketnow.azurewebsites.net/]
+The App is deployed at Heroku                                                                                               
+Live link : [https://glacial-atoll-12003.herokuapp.com/]
 
 # Features
 Two user catogaries
